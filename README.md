@@ -2,34 +2,15 @@
 
 A modern, full-stack apartment listing application built with Node.js, Express, TypeScript, Prisma, PostgreSQL, Next.js, and Tailwind CSS.
 
-## 📋 Table of Contents
 
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Database Setup](#database-setup)
-- [Running the Application](#running-the-application)
-- [API Documentation](#api-documentation)
-- [Frontend Routes](#frontend-routes)
-- [Environment Variables](#environment-variables)
-- [Development](#development)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
-- [License](#license)
 
-## ✨ Features
 
 ### Backend Features
 - **RESTful API** with Express.js and TypeScript
 - **PostgreSQL Database** with Prisma ORM
 - **Advanced Search & Filtering** by unit name, number, project, rent range, and bedrooms
 - **Full CRUD Operations** for apartments
-- **Data Validation** and error handling
-- **CORS** enabled for cross-origin requests
-- **Database Seeding** with sample data
+
 
 ### Frontend Features
 - **Server-Side Rendering** with Next.js 14
@@ -44,9 +25,7 @@ A modern, full-stack apartment listing application built with Node.js, Express, 
 ### Search & Filter Capabilities
 - 🔍 **Text Search**: Search by unit name, unit number, or project name
 - 🏢 **Project Filter**: Filter by specific projects
-- 💰 **Rent Range**: Filter by minimum and maximum rent
 - 🛏️ **Bedroom Count**: Filter by number of bedrooms
-- 📱 **Real-time Results**: Instant search results with URL persistence
 
 ## 🛠 Tech Stack
 
@@ -71,7 +50,7 @@ A modern, full-stack apartment listing application built with Node.js, Express, 
 apartment-listing-app/
 ├── backend/                     # Express.js backend
 │   ├── src/
-│   │   ├── server.ts           # Main server file
+│   │   ├── index.ts           # Main server file
 │   │   └── seed.ts             # Database seeding script
 │   ├── prisma/
 │   │   └── schema.prisma       # Database schema
@@ -79,7 +58,7 @@ apartment-listing-app/
 │   ├── tsconfig.json
 │   └── .env                    # Backend environment variables
 │
-├── frontend/                    # Next.js frontend
+├── frontend-next/                    # Next.js frontend
 │   ├── app/
 │   │   ├── apartments/
 │   │   │   └── create/
@@ -117,7 +96,7 @@ Before you begin, ensure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/apartment-listing-app.git
+git clone https://github.com/AhmedNasrElhariri/nawyTask.git
 cd apartment-listing-app
 ```
 
@@ -126,12 +105,13 @@ cd apartment-listing-app
 ```bash
 cd backend
 npm install
+
 ```
 
 ### 3. Frontend Setup
 
 ```bash
-cd ../frontend
+cd ../frontend-next
 npm install
 ```
 
@@ -162,30 +142,13 @@ FRONTEND_URL=http://localhost:3000
 
 1. **Copy environment variables:**
 ```bash
-cd frontend
-cp .env.local.example .env.local
+cd frontend-next
+cp env.local.example .env.local
 ```
 
 2. **Edit `.env.local` file:**
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:3001
-DATABASE_URL="postgresql://username:password@localhost:5432/apartment_db?schema=public"
-```
-
-## 🗄️ Database Setup
-
-### 1. Create PostgreSQL Database
-
-```sql
--- Connect to PostgreSQL
-psql -U postgres
-
--- Create database
-CREATE DATABASE apartment_db;
-
--- Create user (optional)
-CREATE USER apartment_user WITH PASSWORD 'your_password';
-GRANT ALL PRIVILEGES ON DATABASE apartment_db TO apartment_user;
+NEXT_PUBLIC_API_URL=http://localhost:4000
 ```
 
 ### 2. Run Database Migrations
@@ -203,52 +166,15 @@ npx prisma db push
 npm run db:seed
 ```
 
-### 3. View Database (Optional)
-
-```bash
-# Open Prisma Studio to view data
-npx prisma studio
-```
 
 ## 🏃‍♂️ Running the Application
 
-### Development Mode
-
-**Terminal 1 - Backend:**
-```bash
-cd backend
-npm run dev
-```
-Backend will run on `http://localhost:3001`
-
-**Terminal 2 - Frontend:**
-```bash
-cd frontend
-npm run dev
-```
-Frontend will run on `http://localhost:3000`
-
-### Production Mode
-
-**Backend:**
-```bash
-cd backend
-npm run build
-npm start
-```
-
-**Frontend:**
-```bash
-cd frontend
-npm run build
-npm start
-```
 
 ## 📚 API Documentation
 
 ### Base URL
 ```
-http://localhost:3001/api
+http://localhost:4000/api
 ```
 
 ### Endpoints
@@ -258,9 +184,6 @@ http://localhost:3001/api
 | `GET` | `/apartments` | Get all apartments with search/filter | `search`, `project`, `minRent`, `maxRent`, `bedrooms` |
 | `GET` | `/apartments/:id` | Get apartment by ID | `id` (path parameter) |
 | `POST` | `/apartments` | Create new apartment | Request body with apartment data |
-| `PUT` | `/apartments/:id` | Update apartment | `id` (path parameter) + request body |
-| `DELETE` | `/apartments/:id` | Delete apartment | `id` (path parameter) |
-| `GET` | `/health` | Health check | None |
 
 ### Request/Response Examples
 
@@ -360,112 +283,6 @@ NEXT_PUBLIC_API_URL=http://localhost:3001
 DATABASE_URL="postgresql://username:password@localhost:5432/apartment_db?schema=public"
 ```
 
-## 👨‍💻 Development
-
-### Available Scripts
-
-#### Backend Scripts
-```bash
-npm run dev          # Start development server with hot reload
-npm run build        # Build TypeScript to JavaScript
-npm start           # Start production server
-npm run db:generate # Generate Prisma client
-npm run db:push     # Push schema to database
-npm run db:migrate  # Run database migrations
-npm run db:seed     # Seed database with sample data
-```
-
-#### Frontend Scripts
-```bash
-npm run dev         # Start development server
-npm run build       # Build for production
-npm start          # Start production server
-npm run lint       # Run ESLint
-```
-
-### Database Commands
-
-```bash
-# View database in browser
-npx prisma studio
-
-# Reset database
-npx prisma migrate reset
-
-# Generate new migration
-npx prisma migrate dev --name your_migration_name
-
-# Deploy migrations to production
-npx prisma migrate deploy
-```
-
-### Code Structure Guidelines
-
-- **Backend**: Follow RESTful API conventions
-- **Frontend**: Use Server Components for data fetching, Client Components for interactivity
-- **Database**: Use Prisma for all database operations
-- **Styling**: Use Tailwind CSS utility classes
-- **TypeScript**: Maintain strict type checking
-
-## 🚀 Deployment
-
-### Backend Deployment (Railway/Heroku)
-
-1. **Set environment variables**
-2. **Build command:** `npm run build`
-3. **Start command:** `npm start`
-4. **Run migrations:** `npx prisma migrate deploy`
-
-### Frontend Deployment (Vercel/Netlify)
-
-1. **Set environment variables**
-2. **Build command:** `npm run build`
-3. **Output directory:** `.next`
-4. **Install command:** `npm install`
-
-### Database Deployment
-
-Consider using:
-- **Railway** (PostgreSQL)
-- **Supabase** (PostgreSQL)
-- **PlanetScale** (MySQL)
-- **Neon** (PostgreSQL)
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-1. **Database Connection Error**
-   - Check your DATABASE_URL format
-   - Ensure PostgreSQL is running
-   - Verify database credentials
-
-2. **CORS Errors**
-   - Check FRONTEND_URL in backend .env
-   - Ensure ports match your configuration
-
-3. **Prisma Client Errors**
-   - Run `npx prisma generate`
-   - Check if database schema is up to date
-
-4. **Build Errors**
-   - Clear node_modules and reinstall
-   - Check TypeScript errors
-   - Verify environment variables
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
 
 ## 🏗️ Built With
 
@@ -481,8 +298,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💼 Author
 
 **Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
+- GitHub: [@AhmedNasr]
+- Email: ahmednasr.fci97@gmail.com
 
 ---
 
