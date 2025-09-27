@@ -1,0 +1,31 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Apartment {
+  id          Int      @id @default(autoincrement())
+  unitName    String
+  unitNumber  String   @unique
+  project     String
+  bedrooms    Int
+  bathrooms   Int
+  area        Float    // in square feet or meters
+  rent        Float
+  description String?
+  imageUrl    String?
+  address     String
+  amenities   String[] // Array of amenities
+  available   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("apartments")
+}
