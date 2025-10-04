@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { getData } from "@/lib/fetch-data";
-import { Apartment } from "@/interfaces";
+import { ApartmentsService } from "@/services/apartments.service";
 
 export default async function ApartmentDetailPage({
   params,
@@ -10,9 +9,7 @@ export default async function ApartmentDetailPage({
   params: { id: string };
 }) {
   const id = await params.id;
-  const endpoint = `apartments/${id}`;
-
-  const { data: apartment } = await getData<Apartment>(endpoint);
+  const apartment = await ApartmentsService.getById(id);
 
   if (!apartment) {
     notFound();
@@ -68,7 +65,7 @@ export default async function ApartmentDetailPage({
             </div>
 
             <div className="text-3xl font-bold text-gray-900 mb-6">
-               ${apartment.rent.toLocaleString("en-US")}/month
+              ${apartment.rent.toLocaleString("en-US")}/month
             </div>
 
             <div className="mb-6">

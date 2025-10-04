@@ -1,6 +1,7 @@
 import { getData } from "@/lib/fetch-data";
 import HomePageView from "./home";
 import { Apartment } from "@/interfaces";
+import { ApartmentsService } from "@/services/apartments.service";
 
 interface SearchParams {
   search?: string;
@@ -22,15 +23,7 @@ export default async function HomePage({
     bedrooms: searchPa.bedrooms,
   };
 
-  const queryParams = new URLSearchParams();
-  Object.entries(filters).forEach(([key, value]) => {
-    if (value) queryParams.append(key, value);
-  });
-
-  const queryString = queryParams.toString();
-  const endpoint = queryString ? `apartments/?${queryString}` : "apartments";
-
-  const { data: apartments } = await getData<Apartment[]>(endpoint);
+  const apartments = await ApartmentsService.getAll(filters);
 
   return <HomePageView data={apartments} searchParams={searchPa} />;
 }

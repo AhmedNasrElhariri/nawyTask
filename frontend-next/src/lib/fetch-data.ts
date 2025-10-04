@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import { cookies } from "next/headers";
 import { baseURL } from "./constants";
 
-export const getData = async <T = any>(
+export const getData = async <T = unknown>(
   url: string,
   options?: AxiosRequestConfig
 ): Promise<{ data: T }> => {
